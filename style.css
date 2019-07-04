@@ -33,3 +33,10 @@ td {
 button{
     background-color: #808080;
 }
+
+.history-display{
+    border:2px solid black;
+    width:100%;
+    height:70px;
+    overflow-y:scroll;
+}

@@ -4,12 +4,12 @@ let idList = [];
 let objectList= null;
 let gameFinished = false;
 //Идикатор первого хода игрока
-let firstStep = false;
+let firstStep = true;
 
 let userScore = 0;
 let computerScore= 0;
 setScore(userScore,computerScore);
-// addEventListenerToCells();
+historyDisplay();
 battlefield.addEventListener('click',battlefieldListener);
 
 document.querySelector('#reset').addEventListener('click',x=>{
@@ -23,7 +23,6 @@ document.querySelector('#reset').addEventListener('click',x=>{
             computerStep();
     }
 });
-
 
 //Возвращает есть ли коллизия
 function checkCollision(checkingId){
@@ -104,15 +103,18 @@ function checkWinner() {
     });
     if(checkEqualsCombinations(oList)) {
         setScore(++userScore);
+        historyLog('o');
         endOfGame();
         return true;
     }
     if(checkEqualsCombinations(xList)){
         setScore(++computerScore);
+        historyLog('x');
         endOfGame();
         return true;
     }
     if(idList.length===9) {
+        historyLog('-');
         endOfGame();
         return true;
     }
@@ -201,7 +203,6 @@ function checkOffDiag(list) {
 
 function endOfGame() {
     battlefield.removeEventListener('click',battlefieldListener);
-    console.log('win');
     gameFinished = true;
 }
 
@@ -239,4 +240,63 @@ function clearScene() {
 function setScore(){
     const scoreEl = document.querySelector('#score');
     scoreEl.textContent = `User score: ${userScore}. ComputerScore: ${computerScore}`;
+}
+
+function historyLog(winner) {
+    let history = getHistory();
+    if(!history)
+        history = [];
+    switch (winner){
+        case 'x':{
+            history.push({
+                type:'X',
+                time:new Date().toLocaleTimeString('en-US'),
+
+            });
+            localStorage.setItem('history',JSON.stringify(history));
+            break;
+        }
+        case 'o':{
+            history.push({
+                type:'O',
+                time:new Date().toLocaleTimeString('en-US')
+            });
+            localStorage.setItem('history',JSON.stringify(history));
+            break;
+        }
+        case '-':{
+            history.push({
+                type:'Draw',
+                time:new Date().toLocaleTimeString('en-US')
+            });
+            localStorage.setItem('history',JSON.stringify(history));
+            break;
+        }
+    }
+    historyDisplay();
+}
+
+function getHistory() {
+    let item = localStorage.getItem('history');
+    return JSON.parse(item);
+}
+
+function clearHistory() {
+    userScore = computerScore = 0;
+    setScore(userScore,computerScore);
+    let history = [];
+    localStorage.setItem('history', JSON.stringify(history));
+    historyDisplay();
+}
+
+function historyDisplay() {
+    let history = getHistory();
+    let histDisplayItem = document.querySelector('.history-display');
+    histDisplayItem.innerHTML = '';
+
+    history.forEach(el=>{
+        let hItem =document.createElement('div');
+        hItem.textContent = `Winner: ${el.type}. Time: ${el.time}`;
+        histDisplayItem.prepend(hItem);
+    });
 }
