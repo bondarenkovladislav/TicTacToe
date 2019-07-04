@@ -29,3 +29,7 @@ html,body{
 td {
     vertical-align: top;
 }
+
+button{
+    background-color: #808080;
+}

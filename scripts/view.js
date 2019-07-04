@@ -1,10 +1,29 @@
-let battlefield = document.querySelector('.battlefield2');
+let battlefield = document.querySelector('.battlefield');
 
 let idList = [];
 let objectList= null;
+let gameFinished = false;
+//Идикатор первого хода игрока
+let firstStep = false;
 
+let userScore = 0;
+let computerScore= 0;
+setScore(userScore,computerScore);
 // addEventListenerToCells();
 battlefield.addEventListener('click',battlefieldListener);
+
+document.querySelector('#reset').addEventListener('click',x=>{
+    if(gameFinished) {
+        gameFinished = !gameFinished;
+        clearScene();
+        idList = [];
+        battlefield.addEventListener('click',battlefieldListener);
+        firstStep = !firstStep;
+        if(!firstStep)
+            computerStep();
+    }
+});
+
 
 //Возвращает есть ли коллизия
 function checkCollision(checkingId){
@@ -29,7 +48,7 @@ function generateMarker(id,flag) {
         }
         case 'o':{
             marker.textContent = 'O';
-            marker.style.color = '#224461'
+            marker.style.color = '#224461';
             break;
         }
     }
@@ -71,13 +90,6 @@ function randomInteger(min, max) {
 function generateId() {
     return `${randomInteger(0,2)}${randomInteger(0,2)}`;
 }
-function getCoordsFromId(id) {
-    return {ix:id.substring(0,1),iy:id.substring(1)};
-
-}
-function getId(object) {
-    return `${object.ix}${object.iy}`;
-}
 
 function checkWinner() {
     objectList = createListOfMarkers();
@@ -91,10 +103,12 @@ function checkWinner() {
         return x.type === 'O';
     });
     if(checkEqualsCombinations(oList)) {
+        setScore(++userScore);
         endOfGame();
         return true;
     }
     if(checkEqualsCombinations(xList)){
+        setScore(++computerScore);
         endOfGame();
         return true;
     }
@@ -188,6 +202,7 @@ function checkOffDiag(list) {
 function endOfGame() {
     battlefield.removeEventListener('click',battlefieldListener);
     console.log('win');
+    gameFinished = true;
 }
 
 function battlefieldListener(e) {
@@ -211,4 +226,17 @@ function cellIndex(element) {
 
 function getTd(row,cell) {
     return battlefield.rows[row].cells[cell];
+}
+
+function clearScene() {
+    Array.from(battlefield.rows).forEach(x=>{
+        Array.from(x.cells).forEach(y=>{
+           y.innerHTML = '';
+        });
+    })
+}
+
+function setScore(){
+    const scoreEl = document.querySelector('#score');
+    scoreEl.textContent = `User score: ${userScore}. ComputerScore: ${computerScore}`;
 }
