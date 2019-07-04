@@ -1,11 +1,9 @@
-let battlefield = document.querySelector('.battlefield');
+let battlefield = document.querySelector('.battlefield2');
 
 let idList = [];
 let objectList= null;
 
-
-getCoordsOfBattlefield();
-
+// addEventListenerToCells();
 battlefield.addEventListener('click',battlefieldListener);
 
 //Возвращает есть ли коллизия
@@ -16,39 +14,12 @@ function checkCollision(checkingId){
     return (index!==-1);
 }
 
-let getIndexesOfSquare = function (x,y) {
-    const xInside = x-this.x;
-    const yInside = y-this.y;
-    const res= {};
-    if(xInside<200)
-        res.ix = 0;
-    else if(xInside<400)
-        res.ix = 1;
-    else
-        res.ix = 2;
-
-    if(yInside<200)
-        res.iy = 0;
-    else if(yInside<400)
-        res.iy = 1;
-    else res.iy = 2;
-    return res;
-};
-
-function getCoordsOfBattlefield() {
-    this.x = battlefield.getBoundingClientRect().left;
-    this.y = battlefield.getBoundingClientRect().top;
-}
-
-function generateMarker(coords,flag) {
-    idList.push(id(coords));
-    const marginLeftInside = 50;
-    const marginTopInside = 25;
-    let marker = document.createElement('span');
+function generateMarker(id,flag) {
+    idList.push(id);
+    let marker = document.createElement('div');
     marker.className = 'marker';
-    marker.style.marginTop = 200*coords.iy+ marginTopInside+'px';
-    marker.style.marginLeft = 200* coords.ix+ marginLeftInside+'px';
-    marker.id = id(coords);
+    let td = getTd(id.substring(0,1),id.substring(1));
+    marker.id = id;
 
     switch(flag){
         case 'x':{
@@ -62,7 +33,7 @@ function generateMarker(coords,flag) {
             break;
         }
     }
-    battlefield.appendChild(marker);
+    td.appendChild(marker);
 }
 
 let winner = function(markersIds) {
@@ -82,12 +53,13 @@ let winner = function(markersIds) {
 };
 
 function computerStep() {
-    let genid;
+    let genId;
+
     do {
         genId = generateId();
     }
     while (checkCollision(genId));
-    generateMarker(getCoordsFromId(genId),'x');
+    generateMarker(genId,'x');
 }
 //Включая концы
 function randomInteger(min, max) {
@@ -103,7 +75,7 @@ function getCoordsFromId(id) {
     return {ix:id.substring(0,1),iy:id.substring(1)};
 
 }
-function id(object) {
+function getId(object) {
     return `${object.ix}${object.iy}`;
 }
 
@@ -120,14 +92,17 @@ function checkWinner() {
     });
     if(checkEqualsCombinations(oList)) {
         endOfGame();
-        return;
+        return true;
     }
     if(checkEqualsCombinations(xList)){
         endOfGame();
-        return;
+        return true;
     }
-    if(idList.length===9)
+    if(idList.length===9) {
         endOfGame();
+        return true;
+    }
+    return false;
 }
 //Создает список объектов: id,type
 function createListOfMarkers() {
@@ -216,9 +191,24 @@ function endOfGame() {
 }
 
 function battlefieldListener(e) {
-    let indexOfSquare = getIndexesOfSquare(e.pageX,e.pageY);
-    if(!checkCollision(id(indexOfSquare)))
-        generateMarker(indexOfSquare,'o');
-    computerStep();
-    checkWinner();
+    const id = `${rowIndex(e.target)}${cellIndex(e.target)}`;
+    if(!checkCollision(id)) {
+        generateMarker(id, 'o');
+        if(!checkWinner()){
+            computerStep();
+            checkWinner();
+        }
+    }
+}
+
+function rowIndex(element) {
+    return element.closest('tr').rowIndex;
+}
+
+function cellIndex(element) {
+    return element.closest('td').cellIndex
+}
+
+function getTd(row,cell) {
+    return battlefield.rows[row].cells[cell];
 }

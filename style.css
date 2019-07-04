@@ -14,9 +14,18 @@ html,body{
 
 .marker{
     position: absolute;
-    height:100px;
-    width:100px;
     font-family: Verdana;
     font-size:130px;
-    /*background-color: #224461;*/
+    margin-left:50px;
+    margin-top:15px;
+}
+
+.battlefield2{
+    height: 600px;
+    width: 600px;
+    background:url("res/battlefield.jpg");
+}
+
+td {
+    vertical-align: top;
 }
