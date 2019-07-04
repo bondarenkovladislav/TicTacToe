@@ -1,23 +1,28 @@
 html,body{
     height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-color: black;
+    width: 100%;
 }
 
 .battlefield {
     width: 600px;
     height: 600px;
-    background:url("res/battlefield.jpg");
+    background:url("res/bg-dark.jpg");
 }
 
 .marker{
     position: absolute;
-    font-family: Verdana;
+    /*font-family: Verdana;*/
+    font-family: Moncentrat,sans-serif;
+    font-weight: 400;
     font-size:130px;
     margin-left:50px;
     margin-top:15px;
+    user-select: none;
 }
 
 .battlefield2{
@@ -28,6 +33,7 @@ html,body{
 
 td {
     vertical-align: top;
+    cursor: pointer;
 }
 
 button{
@@ -35,15 +41,77 @@ button{
 }
 
 .history-display{
-    border:2px solid black;
+    background-color: black;
     width:100%;
     height:70px;
     overflow-y:scroll;
 }
 .hItem{
+    font-family: Moncentrat,sans-serif;
+    color: #595959;
     user-select: none;
 }
 caption{
-    font-size: 30px;
-    font-weight: bold;
+    font-family: Moncentrat,sans-serif;
+    color:orange;
+    font-size: 70px;
+    /*font-weight: bold;*/
+    text-transform: uppercase;
+}
+h2{
+    font-size: 20px;
+    color:orange;
+    font-family: Moncentrat,sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.brk-btn {
+    display: flex;
+    position: relative;
+    background: none;
+    color: orange;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 0.2em solid orange;
+    padding: 0.5em 1em;
+    margin: 20px auto;
+}
+.brk-btn::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 10%;
+    background: #222;
+    height: 0.3em;
+    right: 20%;
+    top: -0.21em;
+    transform: skewX(-45deg);
+    -webkit-transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
+    transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.brk-btn::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 10%;
+    background: #222;
+    height: 0.3em;
+    left: 20%;
+    bottom: -0.25em;
+    transform: skewX(45deg);
+    -webkit-transition: all 0.45 cubic-bezier(0.86, 0, 0.07, 1);
+    transition: all 0.45s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.brk-btn:hover::before {
+    right: 80%;
+}
+.brk-btn:hover::after {
+    left: 80%;
+}
+.right-side{
+    margin-left: 50px;
+}
+.left-side{
+    margin-left: 15%;
 }

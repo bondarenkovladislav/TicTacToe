@@ -45,12 +45,12 @@ function generateMarker(id,flag) {
     switch(flag){
         case 'x':{
             marker.textContent = 'X';
-            marker.style.color = '#38612d';
+            marker.style.color = '#d85403';
             break;
         }
         case 'o':{
             marker.textContent = 'O';
-            marker.style.color = '#224461';
+            marker.style.color = '#dbb701';
             break;
         }
     }
@@ -69,7 +69,7 @@ let winner = function(markersIds) {
     });
     results.forEach(x=>{
         if(x!==undefined)
-            x.style.color = 'red';
+            x.style.color = '#ff0907';
     })
 };
 
@@ -397,7 +397,7 @@ function clearScene() {
 
 function setScore(){
     const scoreEl = document.querySelector('#score');
-    scoreEl.textContent = `User score: ${userScore}. ComputerScore: ${computerScore}`;
+    scoreEl.textContent = `${userScore}:${computerScore}`;
 }
 
 function historyLog(winner) {
@@ -463,10 +463,10 @@ function historyDisplay() {
 
        hItem.onmouseover = function()
         {
-            this.style.backgroundColor = "gray";
+            this.style.backgroundColor = "orange";
         };
        hItem.onmouseleave = function(){
-           this.style.backgroundColor = 'white';
+           this.style.backgroundColor = 'black';
        };
 
         hItem.className = 'hItem';
@@ -486,6 +486,6 @@ function repeatHystory(histObject) {
 
 function resetColorHistory() {
     document.querySelector('.history-display').childNodes.forEach(x=>{
-        x.style.backgroundColor = 'white';
+        x.style.backgroundColor = 'black';
     })
 }

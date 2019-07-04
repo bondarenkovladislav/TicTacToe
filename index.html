@@ -6,30 +6,35 @@
     <link rel = "stylesheet"
           type = "text/css"
           href = "style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,700" rel="stylesheet">
 </head>
 <body>
-<table class="battlefield">
-    <caption id="score">Score</caption>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-</table>
-<button id = 'reset'>Reset Field</button>
-<h2>History</h2>
-<div class="history-display"></div>
-<button onclick="clearHistory()">Clear History</button>
+<div class="left-side">
+    <table class="battlefield">
+        <caption id="score">Score</caption>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <button id = 'reset' class="brk-btn">Reset Field</button>
+</div>
+<div class="right-side">
+    <h2>History</h2>
+    <div class="history-display"></div>
+    <button class="brk-btn" onclick="clearHistory()">Clear History</button>
+</div>
 <script src = "scripts/view.js"></script>
 <script src="scripts/model.js"></script>
 </body>
