@@ -41,7 +41,7 @@ function generateMarker(id,flag) {
     marker.className = 'marker';
     let td = getTd(id.substring(0,1),id.substring(1));
     marker.id = id;
-
+    marker.setAttribute('data-aos','zoom-in');
     switch(flag){
         case 'x':{
             marker.textContent = 'X';
@@ -470,6 +470,7 @@ function historyDisplay() {
        };
 
         hItem.className = 'hItem';
+        hItem.setAttribute('data-aos','zoom-in-up');
         histDisplayItem.prepend(hItem);
     });
 }
