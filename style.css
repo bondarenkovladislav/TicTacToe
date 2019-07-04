@@ -40,3 +40,10 @@ button{
     height:70px;
     overflow-y:scroll;
 }
+.hItem{
+    user-select: none;
+}
+caption{
+    font-size: 30px;
+    font-weight: bold;
+}
