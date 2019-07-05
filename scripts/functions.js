@@ -134,7 +134,12 @@ export function checkWinner(objectList) {
  */
 
 function endOfGame() {
-    document.querySelector('.battlefield').removeEventListener('click',battlefieldListener);
+    let battlefield = document.querySelector('.battlefield');
+    Array.from(battlefield.rows).forEach(x=>{
+        Array.from(x.cells).forEach(y=>{
+            y.removeEventListener('click', battlefieldListener)
+        })
+    })
 }
 
 /*

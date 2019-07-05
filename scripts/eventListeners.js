@@ -17,7 +17,8 @@ let battlefield = document.querySelector('.battlefield');
 document.querySelector('#reset').addEventListener('click',resetField);
 
 //Обработчик при нажатии пользователя мышью внутри поля с клетками
-battlefield.addEventListener('click',battlefieldListener);
+// battlefield.addEventListener('click',battlefieldListener);
+addBattlefieldListeners();
 
 //При нажатии на 'ClearHistory'
 //Очищается история
@@ -41,7 +42,7 @@ function resetField() {
     clearScene(battlefield);
     //Необходимо восстановить обработчик клика на поле после вызова метода 'endOfGame' из 'functions.js',
     //Отключающего его
-    battlefield.addEventListener('click',battlefieldListener);
+    addBattlefieldListeners();
     firstStep = !firstStep;
     if(!firstStep)
         computerStep();
@@ -80,4 +81,16 @@ function rowIndex(element) {
 
 function cellIndex(element) {
     return element.closest('td').cellIndex
+}
+
+/*
+    Функция добавляет всем клеткам таблицы обработчик события 'click'
+ */
+
+function addBattlefieldListeners() {
+    Array.from(battlefield.rows).forEach(x=>{
+        Array.from(x.cells).forEach(y=>{
+            y.addEventListener('click', battlefieldListener)
+        })
+    })
 }
