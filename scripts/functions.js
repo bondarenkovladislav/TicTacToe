@@ -1,5 +1,7 @@
 import {addComputerScore, addUserScore, computerScore, historyLog, historyOpen, userScore} from "./history.js";
 import {checkEqualsCombinations} from "./checkCombinations.js";
+import {tryPredictBestStep} from "./predictComputerStep.js";
+import {battlefieldListener} from "./eventListeners.js";
 
 export let idList= [];
 
@@ -115,27 +117,8 @@ export let winner = function(markersIds) {
     })
 };
 
-export function battlefieldListener(e) {
-    const id = `${rowIndex(e.target)}${cellIndex(e.target)}`;
-    if(!checkCollision(id)) {
-        generateMarker(id, 'o');
-        if(!checkWinner(createListOfMarkers())){
-            computerStep();
-            checkWinner(createListOfMarkers());
-        }
-    }
-}
-
-function rowIndex(element) {
-    return element.closest('tr').rowIndex;
-}
-
-function cellIndex(element) {
-    return element.closest('td').cellIndex
-}
-
 //Возвращает есть ли коллизия
-function checkCollision(checkingId){
+export function checkCollision(checkingId){
     const index=idList.findIndex(x=>{
         return(x===checkingId);
     });
@@ -143,8 +126,8 @@ function checkCollision(checkingId){
 }
 
 export function computerStep() {
-    // if(tryPredictBestStep())
-    //     return;
+    if(tryPredictBestStep())
+        return;
 
     let genId;
     do {

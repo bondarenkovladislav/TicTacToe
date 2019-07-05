@@ -1,4 +1,3 @@
-// import {userScore,computerScore} from "./view";
 import {createListOfMarkers,clearScene,generateMarker,checkWinner,setScore} from "./functions.js";
 
 export let userScore = 0;
