@@ -1,10 +1,23 @@
 import {clearHistory, resetColorHistory, setHistoryOpen} from "./history.js";
 import {clearIdList, clearScene, computerStep,checkCollision,generateMarker,checkWinner,createListOfMarkers} from "./functions.js";
+import {score} from "./initialise.js";
+
 let firstStep = true;
 
 let battlefield = document.querySelector('.battlefield');
 
-document.querySelector('#reset').addEventListener('click',x=>{
+document.querySelector('#reset').addEventListener('click',resetField);
+
+battlefield.addEventListener('click',battlefieldListener);
+
+document.querySelector('#clear-history').addEventListener('click',clearHistory);
+document.querySelector('#clear-history').addEventListener('click',x=>{
+    score.clearScore();
+});
+document.querySelector('#clear-history').addEventListener('click',resetField);
+
+
+function resetField() {
     setHistoryOpen(false);
     resetColorHistory();
     clearScene(battlefield);
@@ -13,11 +26,7 @@ document.querySelector('#reset').addEventListener('click',x=>{
     firstStep = !firstStep;
     if(!firstStep)
         computerStep();
-});
-
-battlefield.addEventListener('click',battlefieldListener);
-
-document.querySelector('#clear-history').addEventListener('click',clearHistory);
+}
 
 export function battlefieldListener(e) {
     const id = `${rowIndex(e.target)}${cellIndex(e.target)}`;

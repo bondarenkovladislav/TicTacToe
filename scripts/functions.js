@@ -2,7 +2,7 @@ import {historyLog, historyOpen} from "./history.js";
 import {checkEqualsCombinations} from "./checkCombinations.js";
 import {tryPredictBestStep} from "./predictComputerStep.js";
 import {battlefieldListener} from "./eventListeners.js";
-import {displayScore,computerScore,userScore,setUserScore,setComputerScore} from "./score.js";
+import {score} from "./initialise.js";
 
 export let idList= [];
 
@@ -67,8 +67,8 @@ export function checkWinner(objectList) {
     });
     if(checkEqualsCombinations(oList)) {
         if(!historyOpen)
-            setUserScore(userScore+1);
-        displayScore(userScore,computerScore);
+            score.setUserScore(score.userScore+1);
+        score.displayScore(score.userScore,score.computerScore);
         historyLog('o');
         endOfGame();
         return true;
@@ -76,8 +76,8 @@ export function checkWinner(objectList) {
     if(checkEqualsCombinations(xList)){
 
         if(!historyOpen)
-            setComputerScore(computerScore+1);
-        displayScore(userScore,computerScore);
+            score.setComputerScore(score.computerScore+1);
+        score.displayScore(score.userScore,score.computerScore);
         historyLog('x');
         endOfGame();
         return true;

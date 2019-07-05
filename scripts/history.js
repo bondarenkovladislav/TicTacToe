@@ -1,5 +1,5 @@
 import {createListOfMarkers,clearScene,generateMarker,checkWinner} from "./functions.js";
-import{userScore,computerScore,setComputerScore,setUserScore,displayScore} from "./score.js";
+import {score} from "./initialise.js";
 
 export let historyOpen = false;
 export function historyLog(winner) {
@@ -42,9 +42,9 @@ export function getHistory() {
 }
 
 export function clearHistory() {
-    setComputerScore(0);
-    setUserScore(0);
-    displayScore();
+    score.setComputerScore(0);
+    score.setUserScore(0);
+    score.displayScore();
     let history = [];
     localStorage.setItem('history', JSON.stringify(history));
     displayHistory();
