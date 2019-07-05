@@ -5,6 +5,7 @@ html,body{
     justify-content: center;
     align-items: center;
     background-color: black;
+    /*background: url('res/prism.png');*/
     width: 100%;
 }
 
