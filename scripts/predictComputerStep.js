@@ -172,7 +172,7 @@ export function tryPredictBestStep() {
         if(predictBestInColumn(oCellPredictVariants[i]))
             return true;
     }
-    
+
     //На диагоналях для команды 'O'
     if(tryPredictForDiagonals(oList))
         return true;
