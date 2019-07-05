@@ -1,6 +1,7 @@
-import {displayHistory} from "./history.js";
-import Score from "./score.js"
+import Score from "./Classes/score.js"
+import History from "./Classes/history.js"
 
 export const score = new Score();
 score.getSavedScore();
-displayHistory();
+export const history = new History(score);
+history.displayHistory();
