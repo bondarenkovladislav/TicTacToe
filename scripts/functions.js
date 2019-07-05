@@ -1,7 +1,8 @@
-import {addComputerScore, addUserScore, computerScore, historyLog, historyOpen, userScore} from "./history.js";
+import {historyLog, historyOpen} from "./history.js";
 import {checkEqualsCombinations} from "./checkCombinations.js";
 import {tryPredictBestStep} from "./predictComputerStep.js";
 import {battlefieldListener} from "./eventListeners.js";
+import {displayScore,computerScore,userScore,setUserScore,setComputerScore} from "./score.js";
 
 export let idList= [];
 
@@ -66,19 +67,17 @@ export function checkWinner(objectList) {
     });
     if(checkEqualsCombinations(oList)) {
         if(!historyOpen)
-            addUserScore();
-        // userScore = historyOpen?userScore:userScore+1;
-        setScore(userScore,computerScore);
+            setUserScore(userScore+1);
+        displayScore(userScore,computerScore);
         historyLog('o');
         endOfGame();
         return true;
     }
     if(checkEqualsCombinations(xList)){
-        // computerScore=1;
-        // computerScore = historyOpen?computerScore:computerScore+1
+
         if(!historyOpen)
-            addComputerScore();
-        setScore(userScore,computerScore);
+            setComputerScore(computerScore+1);
+        displayScore(userScore,computerScore);
         historyLog('x');
         endOfGame();
         return true;
@@ -89,11 +88,6 @@ export function checkWinner(objectList) {
         return true;
     }
     return false;
-}
-
-export function setScore(){
-    const scoreEl = document.querySelector('#score');
-    scoreEl.textContent = `${userScore}:${computerScore}`;
 }
 
 function endOfGame() {

@@ -1,7 +1,5 @@
-import {createListOfMarkers,clearScene,generateMarker,checkWinner,setScore} from "./functions.js";
-
-export let userScore = 0;
-export let computerScore= 0;
+import {createListOfMarkers,clearScene,generateMarker,checkWinner} from "./functions.js";
+import{userScore,computerScore,setComputerScore,setUserScore,displayScore} from "./score.js";
 
 export let historyOpen = false;
 export function historyLog(winner) {
@@ -27,7 +25,7 @@ export function historyLog(winner) {
             break;
         }
     }
-    historyDisplay();
+    displayHistory();
 }
 
 export function createHistoryElement(markerType) {
@@ -44,14 +42,15 @@ export function getHistory() {
 }
 
 export function clearHistory() {
-    userScore = computerScore = 0;
-    setScore(userScore,computerScore);
+    setComputerScore(0);
+    setUserScore(0);
+    displayScore();
     let history = [];
     localStorage.setItem('history', JSON.stringify(history));
-    historyDisplay();
+    displayHistory();
 }
 
-export function historyDisplay() {
+export function displayHistory() {
     let history = getHistory();
     if(history===null){
         clearHistory();
@@ -97,13 +96,6 @@ export function resetColorHistory() {
     document.querySelector('.history-display').childNodes.forEach(x=>{
         x.style.backgroundColor = 'black';
     })
-}
-
-export function addComputerScore() {
-    computerScore++;
-}
-export function addUserScore() {
-    userScore++;
 }
 
 export function setHistoryOpen(value) {
