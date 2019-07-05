@@ -38,7 +38,6 @@ document.querySelector('#clear-history').addEventListener('click',resetField);
 
 function resetField() {
     history.setHistoryOpen(false);
-    History.resetColorHistory();
     clearScene(battlefield);
     //Необходимо восстановить обработчик клика на поле после вызова метода 'endOfGame' из 'functions.js',
     //Отключающего его
