@@ -75,7 +75,7 @@ function rowIndex(element) {
 }
 
 /*
-Возвращает индекс столбца на поле, в котором находится 'element'
+    Возвращает индекс столбца на поле, в котором находится 'element'
  */
 
 function cellIndex(element) {
