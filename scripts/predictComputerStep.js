@@ -1,5 +1,4 @@
 import {createListOfMarkers, generateMarker,checkCollision} from "./functions.js";
-
 function predictBestInRow(list){
     let rowIndex = list[0].substring(0,1);
     let predictIds= [`${rowIndex}0`,`${rowIndex}1`,`${rowIndex}2`];

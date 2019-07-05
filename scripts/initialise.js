@@ -1,3 +1,7 @@
+/*
+    Модуль создает необходимые для дальнейшей работы объекты
+*/
+
 import Score from "./Classes/score.js"
 import History from "./Classes/history.js"
 

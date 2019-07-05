@@ -1,4 +1,4 @@
-import {clearIdList, clearScene, computerStep,checkCollision,generateMarker,checkWinner,createListOfMarkers} from "./functions.js";
+import {clearScene, computerStep,checkCollision,generateMarker,checkWinner,createListOfMarkers} from "./functions.js";
 import {score,history} from "./initialise.js";
 import History from "./Classes/history.js"
 
@@ -22,7 +22,6 @@ function resetField() {
     history.setHistoryOpen(false);
     History.resetColorHistory();
     clearScene(battlefield);
-    clearIdList();
     battlefield.addEventListener('click',battlefieldListener);
     firstStep = !firstStep;
     if(!firstStep)
