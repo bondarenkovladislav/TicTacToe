@@ -102,9 +102,9 @@ export function checkWinner(objectList) {
         //Если только пользователь не просматривает историю.
         //(При клике на строку истории воспроизводится положение маркеров на сцене)
         if(!history.historyOpen)
-            score.setUserScore(score.userScore+1);
+            score.setUserScore(score.getUserScore()+1);
         //Отображаем новый счет игры
-        score.displayScore(score.userScore,score.computerScore);
+        score.displayScore();
         //Добавляем значение в историю игр
         history.historyLog('o');
         endOfGame();
@@ -113,8 +113,8 @@ export function checkWinner(objectList) {
     if(checkEqualsCombinations(xList)){
         //Аналогично для команды 'X'
         if(!history.historyOpen)
-            score.setComputerScore(score.computerScore+1);
-        score.displayScore(score.userScore,score.computerScore);
+            score.setComputerScore(score.getComputerScore()+1);
+        score.displayScore();
         history.historyLog('x');
         endOfGame();
         return true;

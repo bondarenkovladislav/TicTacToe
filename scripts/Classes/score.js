@@ -1,79 +1,122 @@
 /*
-    Класс реализующий функционал ведения счета.
+    Файл 'score.js' реальзует паттерн модуля,
+    Который эффективно использует мощь замыканий.
+
+    Для реализации модуля необходимо:
+    1) Вызов обертки определения фнукции ('Score').
+    2) Возвращение значения в качетсве API для этого модуля ('publicAPI').
+
+    Модуль реализует функционал ведения счета.
     Счет обновляется каждый раз при завершении матча.
+
+    Функция 'Score' закрывает поля для видимости вне функции,
+    Делая их приватными.
+
+    Возврашает "publicAPI" объект с методами,
+    Замкнутыми на приватную область видимости функции 'Score',
+    В т.ч на поля 'userScore' и 'computerScore'
  */
 
-export default class Score{
-    constructor(){
-        //Поле, хранящее счет игрока
-        this.userScore = 0;
-        //Поле, хранящее счет компьютера
-        this.computerScore = 0;
-        //Поле хранящие изменяемый элемент на сцене
-        this.scoreEl = document.querySelector('#score');
-    }
+export default function Score() {
+    let userScore=0;
+    let computerScore=0;
+    let scoreEl = document.querySelector('#score');
 
     /*
         Метод обновляет табло счета, прерисовывая его с новыми значениями 'userScore' и 'computerScore'
      */
 
-    displayScore(){
-        this.scoreEl.textContent = `${this.userScore}:${this.computerScore}`;
+    function displayScore(){
+        scoreEl.textContent = `${userScore}:${computerScore}`;
         //Сохраняем новое значение в кеш
-        this.saveScore();
-    }
-
-    /*
-        Метод позоляет устанавливать счет пользователя за пределами класса
-     */
-
-    setUserScore(value) {
-        this.userScore = value;
-    }
-
-    /*
-        Метод позоляет устанавливать счет компьютера за пределами класса
-     */
-
-    setComputerScore(value) {
-        this.computerScore = value;
-    }
-
-    /*
-        Метод восстанавливает из кеша текущий счет пользователя и компьютера
-     */
-
-    getSavedScore(){
-        let score = JSON.parse(localStorage.getItem('score'));
-        if(!score) {
-            this.userScore = 0;
-            this.computerScore = 0;
-            this.saveScore();
-        }
-        else {
-            this.userScore = score.UserScore;
-            this.computerScore = score.ComputerScore;
-        }
-        //Обновляем табло счета
-        this.displayScore();
+        saveScore();
     }
 
     /*
         Метод сохраняет текущий счет пользователя и компьютера в кеш
      */
 
-    saveScore(){
-        let json = JSON.stringify({'UserScore':this.userScore,'ComputerScore':this.computerScore});
+    function saveScore(){
+        let json = JSON.stringify({'UserScore':userScore,'ComputerScore':computerScore});
         localStorage.setItem('score',json);
+    }
+
+    /*
+        Метод позоляет устанавливать счет пользователя за пределами класса
+     */
+
+    function setUserScore(value) {
+        userScore = value;
+    }
+
+    /*
+        Метод позоляет устанавливать счет компьютера за пределами класса
+     */
+
+    function setComputerScore(value) {
+        computerScore = value;
+    }
+
+    /*
+        Метод восстанавливает из кеша текущий счет пользователя и компьютера
+     */
+
+    function getSavedScore(){
+        let score = JSON.parse(localStorage.getItem('score'));
+        if(!score) {
+            userScore = 0;
+            computerScore = 0;
+            saveScore();
+        }
+        else {
+            userScore = score.UserScore;
+            computerScore = score.ComputerScore;
+        }
+        //Обновляем табло счета
+        displayScore();
     }
 
     /*
         Метод обнуляет количество очков пользователя, компьютера и сохраняет новые значени в кеш
      */
 
-    clearScore(){
-        this.computerScore=0;
-        this.userScore = 0;
-        this.saveScore();
+    function clearScore(){
+        computerScore=0;
+        userScore = 0;
+        saveScore();
     }
+
+    /*
+        Метод доступа к приватному полю 'userScore'
+     */
+
+    function getUserScore() {
+        return userScore;
+    }
+
+    /*
+        Метод доступа к приватному полю 'computerScore'
+     */
+
+    function getComputerScore() {
+        return computerScore;
+    }
+
+    /*
+        Создает 'publicAPI' объект для доступа к необходимым методам модуля.
+        Этот объект будет возварщен функцией 'Score'.
+     */
+
+    let publicAPI = {
+        displayScore,
+            saveScore,
+            setUserScore,
+            setComputerScore,
+            getSavedScore,
+            getUserScore,
+            getComputerScore
+    };
+
+    return publicAPI;
 }
+// }
